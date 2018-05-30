@@ -1,54 +1,22 @@
-#include <iostream>
-#include <set>
-#include <string>
+#include "functions.hpp"
+#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
+#include "catch.hpp"
 
-using std::cout;
-using std::endl;
 
-class zodziai
-{
-    protected:
-    std::string z;
-    public:
-        zodziai(std::string a)
-        {
-            z=a;
-        }
+TEST_CASE( "konteineriai uzpildomi", "[multimap]" ) {
 
-        bool operator<(const zodziai& rhs) const {
-  if (z < rhs.z) return true;
-  else return false;
+    std::multimap<std::string,int> a;
+    std::set<std::string> B;
+    REQUIRE( a.max_size()>0);
+    REQUIRE( B.max_size()>0);
+    SECTION( "insert" ) {
+        int s=a.size();
+        a.insert(std::pair<std::string,int>("hello",2));
+        REQUIRE( a.size()>s );
+    }
+    SECTION( "spausdinama" ) {
+        read(a,B,"tekstas.txt");
+        print(a,B);
+    }
 }
-void print()
-        {
-            cout<<z<<"\n";
-        }
-};
 
-class zodziai_sk: public zodziai
-{
-private:
-std::size_t sk;
-    public:
-void print()
-        {
-            cout<<z<<" "<<sk<<"\n";
-        }
-};
-int main()
-{
-    std::set<zodziai> a;
-zodziai b("grazus");
-zodziai x("xenomorph");
-zodziai p ("dog");
-zodziai pp ("dog");
-a.insert(b);
-a.insert(p);
-a.insert(x);
-a.insert(pp);
-  for(zodziai h:a)
-  {
-      h.print();
-  }
-    return 0;
-}
